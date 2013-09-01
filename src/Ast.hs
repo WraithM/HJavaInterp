@@ -1,14 +1,25 @@
+module Ast where
+
 data Program = Program [ClassDecl]
 
 data ClassDecl = Class 
-    { name  :: Id 
-    , super :: Id 
-    , vars  :: [(VarKind, VarDecl)] 
-    , methods :: [MethodDecl]
+    { className     :: Id
+    , classSuper    :: Id 
+    , classVars     :: [(VarKind, VarDecl)] 
+    , classMethods  :: [MethodDecl]
+    } deriving (Show, Eq)
+
+-- Check naming of fields
+data MethodDecl = Method
+    { retType       :: ExpType
+    , methodName    :: Id
+    , methodArgs    :: [VarDecl]
+    , methodLocals  :: [VarDecl]
+    , methodStmts   :: [Statement]
+    , retExp        :: Exp
     } deriving (Show, Eq)
 
 data VarDecl = Var ExpType Id
-
 data VarKind = Static | NonStatic
 
 data Statement = Block [Statement]
@@ -56,6 +67,5 @@ data ExpType = ArrayType ExpType
     | FloatType
 
 type Id = String
-
 
 
