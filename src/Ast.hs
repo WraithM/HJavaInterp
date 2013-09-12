@@ -19,24 +19,28 @@ data MethodDecl = Method
     , retExp        :: Exp
     } deriving (Show, Eq)
 
-data VarDecl = Var ExpType Id
-data VarKind = Static | NonStatic
+data VarKind = Static | NonStatic deriving (Show, Eq)
+data VarDecl = Var 
+    { varType :: ExpType 
+    , varName :: Id
+    } deriving (Show, Eq)
 
 data Statement = Block [Statement]
-    | If Exp Statement Statment
+    | If Exp Statement Statement
     | While Exp Statement
     | Println Exp
     | Assignment Id Exp
     | ArrayAssignment Id Exp Exp
     | Break
     | Continue
+    deriving (Show, Eq)
 
 data Exp = Operation Exp BinOp Exp
     | Subscript Exp Exp
     | Length Exp
     | MethodCall Exp Id [Exp]
     | FieldRef Exp Id
-    | Integer Int
+    | EInteger Int
     | ETrue | EFalse
     | EId Id
     | This
@@ -46,6 +50,7 @@ data Exp = Operation Exp BinOp Exp
     | Null
     | EString String
     | EFloat Float
+    deriving (Show, Eq)
 
 data BinOp = And
     | Or
@@ -58,6 +63,7 @@ data BinOp = And
     | Minus
     | Multiplication
     | Division
+    deriving (Show, Eq)
 
 data ExpType = ArrayType ExpType
     | BoolType
@@ -65,7 +71,6 @@ data ExpType = ArrayType ExpType
     | ObjectType Id
     | StringType
     | FloatType
+    deriving (Show, Eq)
 
 type Id = String
-
-
